@@ -2,6 +2,9 @@ require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
 const rowdy = require('rowdy-logger')
+// connect to db
+const db = require('./models')
+db.connect()
 
 // config express app
 const app = express()
@@ -13,6 +16,8 @@ app.use(cors())
 // body parser middlewares
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json()) // for the request body
+// controllers 
+app.use('/api-v1/users', require('./controllers/api-v1/users.js'))
 
 app.get('/', (req, res) => {
   res.json({ msg: 'hello from the backend! 👋' })
